@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autocolecc | Colección de Figuritas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root[data-theme="dark"] {
+      --bg-page: #090b10;
+      --bg-surface: #11151f;
+      --bg-elevated: #181e2c;
+      --bg-input: #0c0f17;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --accent: #e11d48;
+      --accent-hover: #be123c;
+      --gold: #f59e0b;
+      --gold-glow: rgba(245, 158, 11, 0.25);
+      --success: #10b981;
+      --shadow-card: 0 12px 30px -10px rgba(0, 0, 0, 0.65);
+    }
+
+    :root[data-theme="light"] {
+      --bg-page: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-elevated: #f8fafc;
+      --bg-input: #f1f5f9;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --accent: #e11d48;
+      --accent-hover: #be123c;
+      --gold: #d97706;
+      --gold-glow: rgba(217, 119, 6, 0.18);
+      --success: #059669;
+      --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-primary);
+      transition: background-color 0.25s ease, color 0.25s ease;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Topbar */
+    .topbar {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 0.9rem 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .topbar-inner {
+      max-width: 1260px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--accent), #9f1239);
+      color: white;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: 1.15rem;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      letter-spacing: -0.5px;
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.35);
+    }
+
+    .brand h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+    }
+
+    .brand h1 span {
+      color: var(--accent);
+    }
+
+    .brand p {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .divider-v {
+      width: 1px;
+      height: 24px;
+      background: var(--border-strong);
+    }
+
+    .icon-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      border: 1px solid var(--border-strong);
+      padding: 0.5rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .icon-btn:hover {
+      border-color: var(--accent);
+    }
+
+    .auth-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 8px var(--success);
+    }
+
+    input {
+      background: var(--bg-input);
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      padding: 0.6rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
+    }
+
+    button {
+      font-weight: 600;
+      font-size: 0.88rem;
+      padding: 0.6rem 1.05rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-strong);
+    }
+
+    .btn-outline:hover {
+      color: var(--text-primary);
+      border-color: var(--text-primary);
+    }
+
+    .w-full {
+      width: 100%;
+    }
+
+    /* Main Workspace */
+    .workspace {
+      max-width: 1260px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.4rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .eyebrow {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      color: var(--accent);
+      margin-bottom: 0.2rem;
+    }
+
+    .card-header {
+      margin-bottom: 1.1rem;
+    }
+
+    .card-header h2, .card-header h3 {
+      font-size: 1.2rem;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* Album Navigation */
+    .album-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .album-nav li {
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.92rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s;
+    }
+
+    .album-nav li:hover {
+      border-color: var(--accent);
+      transform: translateX(3px);
+    }
+
+    .album-nav li.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .badge-mio {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+      color: inherit;
+    }
+
+    .form-vertical {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .field label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    /* Hero Banner */
+    .hero-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.6rem 1.8rem;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-text h2 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-text p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .stats-box {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      min-width: 250px;
+    }
+
+    .stats-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .stats-top strong {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+    }
+
+    .progress-rail {
+      height: 8px;
+      background: var(--bg-input);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 0.45rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--gold));
+      border-radius: 999px;
+      transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .stats-box small {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+
+    /* Stickers Grid */
+    .stickers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(235px, 1fr));
+      gap: 1.4rem;
+      margin-bottom: 2rem;
+    }
+
+    .figurita {
+      background: var(--bg-surface);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px dashed var(--border-strong);
+      box-shadow: var(--shadow-card);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .figurita:hover {
+      transform: translateY(-5px);
+    }
+
+    .figurita.pegada {
+      border: 2px solid var(--gold);
+      box-shadow: 0 12px 28px -6px var(--gold-glow);
+    }
+
+    .sticker-media {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      background: #090b10;
+      overflow: hidden;
+    }
+
+    .figurita img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) opacity(0.38);
+      transition: filter 0.4s ease, transform 0.4s ease;
+    }
+
+    .figurita.pegada img {
+      filter: none;
+    }
+
+    .figurita.pegada:hover img {
+      transform: scale(1.04);
+    }
+
+    .sticker-num {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(9, 11, 16, 0.75);
+      backdrop-filter: blur(6px);
+      color: #f8fafc;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .sticker-status {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--gold);
+      color: #090b10;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .sticker-content {
+      padding: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .figurita h4 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    .figurita.pegada h4 {
+      color: var(--text-primary);
+    }
+
+    .btn-pegado {
+      width: 100%;
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      border: 1px solid var(--border-strong);
+    }
+
+    .btn-pegado:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .figurita.pegada .btn-pegado {
+      background: rgba(16, 185, 129, 0.14);
+      color: var(--success);
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+
+    /* Add Sticker Bar */
+    .add-bar-title {
+      margin-bottom: 1rem;
+    }
+
+    .add-bar-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 0.8rem;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3.5rem 1.5rem;
+      background: var(--bg-surface);
+      border-radius: 16px;
+      border: 1px dashed var(--border-strong);
+      color: var(--text-secondary);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 900px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+      .add-bar-fields {
+        grid-template-columns: 1fr;
+      }
+    }
+    /* Botones de eliminar */
+    .album-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-delete-sm {
+      background: transparent;
+      color: inherit;
+      opacity: 0.65;
+      padding: 2px 6px;
+      font-size: 0.85rem;
+      border-radius: 6px;
+      line-height: 1;
+    }
+
+    .btn-delete-sm:hover {
+      opacity: 1;
+      background: rgba(225, 29, 72, 0.25);
+      color: #ff4d6d;
+    }
+
+    .sticker-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-delete-fig {
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-strong);
+      padding: 0.6rem 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .btn-delete-fig:hover {
+      background: rgba(225, 29, 72, 0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-badge">AA</div>
+        <div>
+          <h1>AUTO<span>ACUMULA</span></h1>
+          <p>coleccion de figuss</p>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <button id="theme-toggle" class="icon-btn" title="Cambiar tema claro/oscuro" onclick="toggleTheme()">
+          <span id="theme-icon"></span>
+          <span id="theme-label">Modo Claro</span>
+        </button>
+
+        <div class="divider-v"></div>
+
+        <!-- Sesión opcional con contraseña -->
+        <div id="guest-panel" class="auth-group">
+          <input type="text" id="login-username" placeholder="Usuario" style="width: 130px;">
+          <input type="password" id="login-password" placeholder="Contraseña" style="width: 130px;">
+          <button class="btn-primary" onclick="iniciarSesion()">Entrar</button>
+          <span id="auth-error" style="color: #e11d48; font-size: 0.78rem; font-weight: 600;"></span>
+        </div>
+
+        <div id="user-panel" class="auth-group hidden">
+          <div class="user-chip">
+            <span class="status-dot"></span>
+            <span id="display-username"></span>
+          </div>
+          <button class="btn-outline" onclick="cerrarSesion()">Salir</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <aside class="sidebar">
+      <div class="card">
+        <div class="card-header">
+          <span class="eyebrow">BIBLIOTECA</span>
+          <h2>Álbumes</h2>
+        </div>
+        <ul id="lista-albums" class="album-nav"></ul>
+      </div>
+
+      <form id="form-album" class="card form-vertical">
+        <div class="card-header">
+          <span class="eyebrow">PERSONALIZAR</span>
+          <h3>Crear Nuevo Álbum</h3>
+        </div>
+        <div class="field">
+          <label for="album-nombre">Nombre de la colección</label>
+          <input type="text" id="album-nombre" placeholder="Ej: Lamborghini, JDM 90s..." required>
+        </div>
+        <div class="field">
+          <label for="album-desc">Descripción</label>
+          <input type="text" id="album-desc" placeholder="Breve reseña del álbum">
+        </div>
+        <button type="submit" class="btn-primary w-full">+ Crear Álbum</button>
+      </form>
+    </aside>
+
+    <section class="stage">
+      <div class="hero-card">
+        <div class="hero-text">
+          <span class="eyebrow">ÁLBUM ACTIVO</span>
+          <h2 id="titulo-album">Cargando colección...</h2>
+          <p id="desc-album">Seleccioná un álbum del menú izquierdo para ver sus figuritas.</p>
+        </div>
+
+        <div id="progress-wrapper" class="stats-box hidden">
+          <div class="stats-top">
+            <span>Completado</span>
+            <strong id="progress-percent">0%</strong>
+          </div>
+          <div class="progress-rail">
+            <div id="progress-bar" class="progress-fill" style="width: 0%"></div>
+          </div>
+          <small id="progress-text">0 de 0 figuritas pegadas</small>
+        </div>
+      </div>
+
+      <div id="grid-figuritas" class="stickers-grid"></div>
+
+      <form id="form-figurita" class="card add-bar hidden">
+        <div class="add-bar-title">
+          <span class="eyebrow">EXPANSIÓN</span>
+          <h3>Agregar nueva figurita a este álbum</h3>
+        </div>
+        <div class="add-bar-fields">
+          <input type="text" id="fig-nombre" placeholder="Modelo del vehículo (Ej: Porsche 918 Spyder)" required>
+          <input type="url" id="fig-imagen" placeholder="Direccion de la foto">
+          <button type="submit" class="btn-primary">+ Añadir Figurita</button>
+        </div>
+      
+      </form>
+    </section>
+  </main>
+
+  <script src="app.js?v=4"></script>
+</body>
+</html>
